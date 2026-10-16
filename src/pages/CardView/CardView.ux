@@ -221,28 +221,28 @@
         success: this.onImageExists,
         fail: this.createImage
       })
-      /*let self = this;
+      let self = this;
       brightness.getMode({
         success: function(data) {
-          self.brightness_mode = data
-          brightness.getValue({
-            success: function(data) {
-              self.brightness_value = data
-              brightness.setValue({value: 255})
-              brightness.setMode({mode: 0})
-              brightness.setKeepScreenOn({keepScreenOn: true})
-            },
-            fail: (data, code) => {console.log(`getValue: ${data} ${code}`)}
-          })
+          self.brightness_mode = data.mode
         }, 
         fail: (data, code) => {console.log(`getMode: ${data} ${code}`)}
-      })*/
+      })
+      brightness.getValue({
+        success: function(data) {
+          self.brightness_value = data.value
+        },
+        fail: (data, code) => {console.log(`getValue: ${data} ${code}`)}
+      })
+      brightness.setMode({mode: 0})
+      brightness.setKeepScreenOn({keepScreenOn: true})
+      brightness.setValue({value: 255})
     },
 
     onHide() {
-      /*brightness.setValue({value: this.brightness_value})
+      brightness.setKeepScreenOn({keepScreenOn: false})
+      brightness.setValue({value: this.brightness_value})
       brightness.setMode({mode: this.brightness_mode})
-      brightness.setKeepScreenOn({keepScreenOn: false})*/
     }
   }
   </script>
