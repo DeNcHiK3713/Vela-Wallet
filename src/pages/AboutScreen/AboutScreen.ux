@@ -115,5 +115,18 @@
     width: 192px;
     height: 72px;
   }
+
+  /* Rectangular watches (Redmi Watch 6): scrollable page, just trim the waste. */
+  @media screen and (shape: rect) {
+    .header {
+      margin-top: 24px;
+    }
+    .version {
+      margin-bottom: 16px;
+    }
+    .bottom {
+      height: 32px;
+    }
+  }
   </style>
   

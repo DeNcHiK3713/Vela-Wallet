@@ -46,7 +46,7 @@
     color: white;
     text-align: center;
     width: 192px;
-    height: 490px;
+    height: 100%;
     font-size: 20px;
   }
   </style>

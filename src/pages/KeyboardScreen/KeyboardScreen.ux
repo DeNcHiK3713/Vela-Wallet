@@ -228,5 +228,35 @@
     color: white;
     text-align: center;
   }
+
+  /* Rectangular watches (Redmi Watch 6): the whole keyboard must fit the
+     smaller design-space height (192 x ~228 vs 192 x 490). */
+  @media screen and (shape: rect) {
+    .title {
+      height: 48px;
+      font-size: 16px;
+    }
+    .displayrow {
+      height: 40px;
+    }
+    .display {
+      height: 40px;
+      font-size: 18px;
+    }
+    .backspace {
+      height: 40px;
+    }
+    .keyboard-row {
+      height: 27px;
+    }
+    .keyboard-button {
+      height: 27px;
+      font-size: 18px;
+    }
+    .save-button {
+      height: 27px;
+      font-size: 18px;
+    }
+  }
   </style>
   

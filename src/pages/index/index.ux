@@ -99,7 +99,7 @@ export default {
 
 .list {
     width: 192px;
-    height: 490px;
+    height: 100%;
   }
   
   .row {
@@ -138,5 +138,20 @@ export default {
   .footer {
     width: 192px;
     height: 32px;
+  }
+
+  /* Rectangular watches (Redmi Watch 6, 432x514): the shorter design-space
+     height leaves far less vertical room, so shrink the empty spacers. */
+  @media screen and (shape: rect) {
+    .list {
+      margin-top: 0px;
+      height: 100%;
+    }
+    .header {
+      height: 24px;
+    }
+    .footer {
+      height: 16px;
+    }
   }
 </style>

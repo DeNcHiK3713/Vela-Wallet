@@ -106,7 +106,7 @@
 
   .list {
     width: 192px;
-    height: 490px;
+    height: 100%;
   }
   
   .row {
@@ -141,6 +141,22 @@
     width: 192px;
     height: 48px;
     text-align: center;
+  }
+
+  /* Rectangular watches (Redmi Watch 6): tighter vertical budget. */
+  @media screen and (shape: rect) {
+    .header {
+      height: 16px;
+    }
+    .header-text {
+      height: 32px;
+    }
+    .footer {
+      height: 12px;
+    }
+    .manual {
+      height: 40px;
+    }
   }
   </style>
   

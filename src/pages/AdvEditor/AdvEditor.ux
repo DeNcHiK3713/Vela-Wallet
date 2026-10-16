@@ -156,5 +156,29 @@ import { saveToPhotosAlbum } from "@system.media";
     text-align: center;
     font-size: 18px;
   }
+
+  /* Rectangular watches (Redmi Watch 6): 4 rows + save must fit ~228 design px. */
+  @media screen and (shape: rect) {
+    .header {
+      height: 8px;
+    }
+    .title {
+      height: 16px;
+      font-size: 14px;
+    }
+    .value {
+      height: 24px;
+      font-size: 18px;
+    }
+    .row {
+      margin-bottom: 6px;
+    }
+    .footer {
+      height: 4px;
+    }
+    .save {
+      height: 28px;
+    }
+  }
   </style>
   

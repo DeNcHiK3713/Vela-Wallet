@@ -1,7 +1,7 @@
 <template>
     <div class="page" @swipe="goBack">
         <scroll class="scroll">
-          <div class="main">
+          <div class="main" style="height: {{screenH}}px">
             <image-animator 
               class="img" 
               if="isImage" 
@@ -10,7 +10,8 @@
               duration="1s"
               style="width: {{width}}; height: {{height}}; margin-top: {{imageMarginTop}}" >
             </image-animator>
-            <qrcode if="isQR" value="{{content}}" class="img-qr"></qrcode>
+            <qrcode if="isQR" value="{{content}}" class="img-qr"
+              style="margin-top: {{qrMargin}}; margin-bottom: {{qrMargin}}"></qrcode>
             <text if="msg" class="error">{{msg}}</text>
           </div>
           <text class="message">Формат: {{format}}</text>
@@ -26,6 +27,7 @@
   import router from "@system.router"
   import file from '@system.file'
   import brightness from '@system.brightness' 
+  import device from '@system.device'
 
   import {CardTypes} from "../../utils/database"
   import {CardStorage} from "../../utils/storage"
@@ -40,6 +42,9 @@
       frames: [],
       width: 0,
       height: 0,
+      // Screen height in design px (192 x 490 on Mi Band 9). Converted from the
+      // real screen at runtime, so the layout also fits rectangular watches.
+      screenH: 490,
       brightness_mode: null,
       brightness_value: null
     },
@@ -58,7 +63,10 @@
             return !this.isQR && !this.msg
         },
         imageMarginTop() {
-          return (490 - this.height) / 2
+          return (this.screenH - this.height) / 2
+        },
+        qrMargin() {
+          return Math.max(0, (this.screenH - 176) / 2)
         }
     },
     goBack(eve) {
@@ -126,11 +134,12 @@
         canvas = CanvasLite.rotate90(canvas)
       }
       const imgDiagonal = Math.ceil(Math.sqrt((canvas.width * canvas.width) + (canvas.height * canvas.height)))
-      const screenDiagonal = Math.ceil(Math.sqrt((192 * 192 + 490 * 490))) - (96 / 2);
+      // ponytail: 192 is the manifest designWidth; screenH is its height equivalent.
+      const screenDiagonal = Math.ceil(Math.sqrt((192 * 192 + this.screenH * this.screenH))) - (96 / 2);
 
       console.log("diagonal's", imgDiagonal, screenDiagonal);
 
-      if(canvas.height * 2 <= 490 && canvas.width * 2 <= 192 && imgDiagonal * 2 <= screenDiagonal) {
+      if(canvas.height * 2 <= this.screenH && canvas.width * 2 <= 192 && imgDiagonal * 2 <= screenDiagonal) {
         // Scale x2
         console.log("Perform scale x2");
         canvas = CanvasLite.scale(canvas)
@@ -192,6 +201,20 @@
         complete: this.deleteCard
       })
     },
+    onInit() {
+      // Screen height in design px, so this page adapts to both capsule bands
+      // (192x490) and rectangular watches (432x514 -> 192x228).
+      // ponytail: 192 must match manifest config.designWidth
+      device.getInfo({
+        success: (ret) => {
+          if(ret && ret.screenWidth && ret.screenHeight) {
+            this.screenH = Math.round(ret.screenHeight * 192 / ret.screenWidth)
+          }
+        },
+        fail: (data, code) => { console.log(`getInfo: ${data} ${code}`) }
+      })
+    },
+
     onShow() {
       file.get({
         uri: `internal://files/${this.filename}`,
@@ -246,7 +269,6 @@
 
   .main {
     width: 192px;
-    height: 490px;
     align-content: center;
     justify-content: center;
   }
@@ -254,7 +276,7 @@
   .img {
     object-fit: none;
     width: 176px;
-    height: 490px;
+    height: 100%;
     margin-left: 8px;
     margin-right: 8px;
   }
@@ -270,7 +292,7 @@
 
   .error {
     width: 192px;
-    height: 490px;
+    height: 100%;
     font-size: 18px;
     text-align: center;
   }

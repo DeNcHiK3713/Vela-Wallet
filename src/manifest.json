@@ -4,6 +4,7 @@
   "versionName": "1.0.1",
   "versionCode": 1,
   "minPlatformVersion": 1000,
+  "minAPILevel": 2,
   "icon": "/common/logo.png",
   "deviceTypeList": [
     "watch"
@@ -11,6 +12,9 @@
   "features": [
     {
       "name": "system.router"
+    },
+    {
+      "name": "system.device"
     },
     {
       "name": "system.media"
