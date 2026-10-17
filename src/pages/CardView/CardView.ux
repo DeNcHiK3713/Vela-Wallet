@@ -102,7 +102,7 @@
       JsBarcode(canvas, this.content, {
         format: this.format,
         flat: true,
-        height: 60,
+        height: Math.ceil(60 * 450 / this.screenH),
         width: 2,
         margin: 0,
         displayValue: false
@@ -276,7 +276,6 @@
   .img {
     object-fit: none;
     width: 176px;
-    height: 100%;
     margin-left: 8px;
     margin-right: 8px;
   }
@@ -286,8 +285,6 @@
     height: 176px;
     margin-left: 8px;
     margin-right: 8px;
-    margin-top: 157px;
-    margin-bottom: 157px;
   }
 
   .error {
