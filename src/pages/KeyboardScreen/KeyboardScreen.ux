@@ -32,6 +32,7 @@
   <script>
   import router from "@system.router"
   import {formatEan13, format3, format4, okay} from "../../utils/database"
+  import device from '@system.device'
   
   export default {
     private: {
@@ -39,7 +40,8 @@
         input_text: "",
         reset_required: false,
         caps: false,
-        current_keyboard: null
+        current_keyboard: null,
+        max_len: -14
     },
     public: {
         next_url: null,
@@ -52,11 +54,11 @@
     computed: {
         display() {
             switch(this.displayFormat) {
-                case "formatEan13": return formatEan13(String(this.input_text));
-                case "format3": return format3(this.input_text);
-                case "format4": return format4(this.input_text);
-                case "okay": return okay(this.input_text);
-                default: return this.input_text;
+                case "formatEan13": return formatEan13(String(this.input_text)).slice(this.max_len);
+                case "format3": return format3(this.input_text).slice(this.max_len);
+                case "format4": return format4(this.input_text).slice(this.max_len);
+                case "okay": return okay(this.input_text).slice(this.max_len);
+                default: return this.input_text.slice(this.max_len);
             }
         }
     },
@@ -164,6 +166,16 @@
     onInit() {
       console.log("<<<<<<<<<< keyboard ")
       console.log(this.kwargs)
+
+      device.getInfo({
+        success: (ret) => {
+          if(ret && ret.screenWidth && ret.screenHeight) {
+            this.max_len = -Math.ceil(ret.screenWidth * 14 / 432)
+          }
+        },
+        fail: (data, code) => { console.log(`getInfo: ${data} ${code}`) }
+      })
+
       if(this.import_input_text !== null) this.input_text = this.import_input_text;
       this.current_keyboard = this.keyboard;
       this.setLayout()
