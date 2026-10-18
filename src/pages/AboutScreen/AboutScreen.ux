@@ -38,7 +38,7 @@
           kwargs: {
             next_url: "pages/ImportPage",
             title: "Введите адрес бэкапа",
-            input_text: "https://vds.f1remoon.com/b.json",
+            input_text: "http://localhost:8080/b.json",
             kwargs: {
 
             }
