@@ -103,7 +103,7 @@
         format: this.format,
         flat: true,
         height: Math.ceil(60 * 450 / this.screenH),
-        width: 2,
+        width: this.content.length > 12 ? 1 : 2,
         margin: 0,
         displayValue: false
       })
