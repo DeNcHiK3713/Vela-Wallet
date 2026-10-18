@@ -21,6 +21,15 @@
     },
     {
       "name": "system.file"
+    },
+    {
+      "name": "system.configuration"
+    },
+    {
+      "name": "system.brightness"
+    },
+    {
+      "name": "system.fetch"
     }
   ],
   "config": {
